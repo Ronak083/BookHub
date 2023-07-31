@@ -11,7 +11,6 @@
         android:src="@drawable/book_app_icon_web"
         android:padding="10dp"
         android:layout_marginTop="20dp"
-
 />
     <TextView
         android:layout_width="wrap_content"
@@ -21,6 +20,5 @@
         android:layout_marginTop="20dp"
         android:padding="10dp"
         android:textSize="18sp"
-
         />
 </LinearLayout>

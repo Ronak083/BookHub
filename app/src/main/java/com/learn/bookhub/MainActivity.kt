@@ -20,5 +20,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        drawerLayout = findViewById(R.id.drawerLayout)
+        coordinatorLayout = findViewById(R.id.coordinatorLayout)
+        toolbar = findViewById(R.id.toolbar)
+        frameLayout = findViewById(R.id.frame)
+        navigationView = findViewById(R.id.navigationView)
+        //setUpToolbar()
+
     }
+    //fun setUpToolbar(){
+        //setSupportActionBar(toolbar)
+        //supportActionBar?.title = "Toolbar Title"
+    //}
 }
