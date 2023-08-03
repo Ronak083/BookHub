@@ -31,6 +31,13 @@ class MainActivity : AppCompatActivity() {
         navigationView = findViewById(R.id.navigationView)
         setUpToolbar()
 
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frame,DashboardFragment())
+            .addToBackStack("Dashboard")
+            .commit()
+        supportActionBar?.title = "Dashboard"
+
+
         val actionBarDrawerToggle = ActionBarDrawerToggle(
             this@MainActivity,drawerLayout,R.string.open_drawer,R.string.close_drawer)
 
@@ -44,6 +51,7 @@ class MainActivity : AppCompatActivity() {
                         .replace(R.id.frame,DashboardFragment())
                         .addToBackStack("Dashboard")
                         .commit()
+                    supportActionBar?.title = "Dashboard"
                     drawerLayout.closeDrawers()
                 }
                 R.id.favourites->{
@@ -51,19 +59,25 @@ class MainActivity : AppCompatActivity() {
                         .replace(R.id.frame,FavouritesFragment())
                         .addToBackStack("Favourites")
                         .commit()
-                    drawerLayout.closeDrawers()                }
+                    supportActionBar?.title = "Favourites"
+                    drawerLayout.closeDrawers()
+                }
                 R.id.profile->{
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.frame,ProfileFragment())
                         .addToBackStack("Profile")
                         .commit()
-                    drawerLayout.closeDrawers()                }
+                    supportActionBar?.title = "Profile"
+                    drawerLayout.closeDrawers()
+                }
                 R.id.aboutApp->{
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.frame,AboutAppFragment())
-                        .addToBackStack("About App").commit()
-                    drawerLayout.closeDrawers()                }
-
+                        .addToBackStack("About App")
+                        .commit()
+                    supportActionBar?.title = "About App"
+                    drawerLayout.closeDrawers()
+                }
             }
 
             return@setNavigationItemSelectedListener true
