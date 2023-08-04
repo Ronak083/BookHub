@@ -15,12 +15,14 @@ import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
-
     lateinit var drawerLayout: DrawerLayout
     lateinit var coordinatorLayout: CoordinatorLayout
     lateinit var toolbar: Toolbar
     lateinit var frameLayout: FrameLayout
     lateinit var navigationView: NavigationView
+
+    var previousMenuItem: MenuItem? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,12 +33,7 @@ class MainActivity : AppCompatActivity() {
         navigationView = findViewById(R.id.navigationView)
         setUpToolbar()
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frame,DashboardFragment())
-            .addToBackStack("Dashboard")
-            .commit()
-        supportActionBar?.title = "Dashboard"
-
+        openDashboard()
 
         val actionBarDrawerToggle = ActionBarDrawerToggle(
             this@MainActivity,drawerLayout,R.string.open_drawer,R.string.close_drawer)
@@ -45,19 +42,20 @@ class MainActivity : AppCompatActivity() {
         actionBarDrawerToggle.syncState()
 
         navigationView.setNavigationItemSelectedListener {
+            if (previousMenuItem != null){
+                previousMenuItem?.isCheckable = false
+            }
+            it.isCheckable = true
+            it.isChecked = true
+            previousMenuItem = it
             when(it.itemId){
                 R.id.dashboard->{
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame,DashboardFragment())
-                        .addToBackStack("Dashboard")
-                        .commit()
-                    supportActionBar?.title = "Dashboard"
+                    openDashboard()
                     drawerLayout.closeDrawers()
                 }
                 R.id.favourites->{
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.frame,FavouritesFragment())
-                        .addToBackStack("Favourites")
                         .commit()
                     supportActionBar?.title = "Favourites"
                     drawerLayout.closeDrawers()
@@ -65,7 +63,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.profile->{
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.frame,ProfileFragment())
-                        .addToBackStack("Profile")
                         .commit()
                     supportActionBar?.title = "Profile"
                     drawerLayout.closeDrawers()
@@ -73,7 +70,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.aboutApp->{
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.frame,AboutAppFragment())
-                        .addToBackStack("About App")
                         .commit()
                     supportActionBar?.title = "About App"
                     drawerLayout.closeDrawers()
@@ -97,5 +93,22 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.openDrawer(GravityCompat.START)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun openDashboard(){
+        val fragment = DashboardFragment()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame, fragment)
+        transaction.commit()
+        supportActionBar?.title = "Dashboard"
+        navigationView.setCheckedItem(R.id.dashboard)
+    }
+
+    override fun onBackPressed() {
+        val frag = supportFragmentManager.findFragmentById(R.id.frame)
+        when(frag){
+            !is DashboardFragment -> openDashboard()
+            else -> super.onBackPressed()
+        }
     }
 }
