@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.learn.bookhub.R
 import com.learn.bookhub.adapter.DashboardRecyclerAdapter
+import com.learn.bookhub.model.Book
 
 class DashboardFragment : Fragment() {
 
@@ -24,6 +25,19 @@ class DashboardFragment : Fragment() {
 
     lateinit var recyclerAdapter: DashboardRecyclerAdapter
 
+    val bookInfoList = arrayListOf<Book>(
+        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
+        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
+        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
+        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
+        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
+        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
+        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
+        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
+        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
+        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily)
+    )
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,15 +49,15 @@ class DashboardFragment : Fragment() {
 
         layoutManager = LinearLayoutManager(activity)
 
-        recyclerAdapter = DashboardRecyclerAdapter(activity as Context, bookList)
+        recyclerAdapter = DashboardRecyclerAdapter(activity as Context, bookInfoList)
 
         recyclerDashboard.adapter = recyclerAdapter
 
         recyclerDashboard.layoutManager = layoutManager
 
         recyclerDashboard.addItemDecoration(
-            DividerItemDecoration(
-                recyclerDashboard.context, (layoutManager as LinearLayoutManager).orientation
+            DividerItemDecoration(recyclerDashboard.context,
+                (layoutManager as LinearLayoutManager).orientation
             )
         )
 
