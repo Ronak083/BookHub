@@ -1,17 +1,20 @@
-package com.learn.bookhub
+package com.learn.bookhub.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
 import android.view.MenuItem
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.learn.bookhub.fragment.FavouritesFragment
+import com.learn.bookhub.fragment.ProfileFragment
+import com.learn.bookhub.R
+import com.learn.bookhub.fragment.AboutAppFragment
+import com.learn.bookhub.fragment.DashboardFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,7 +39,8 @@ class MainActivity : AppCompatActivity() {
         openDashboard()
 
         val actionBarDrawerToggle = ActionBarDrawerToggle(
-            this@MainActivity,drawerLayout,R.string.open_drawer,R.string.close_drawer)
+            this@MainActivity,drawerLayout, R.string.open_drawer, R.string.close_drawer
+        )
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
@@ -49,27 +53,27 @@ class MainActivity : AppCompatActivity() {
             it.isChecked = true
             previousMenuItem = it
             when(it.itemId){
-                R.id.dashboard->{
+                R.id.dashboard ->{
                     openDashboard()
                     drawerLayout.closeDrawers()
                 }
-                R.id.favourites->{
+                R.id.favourites ->{
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame,FavouritesFragment())
+                        .replace(R.id.frame, FavouritesFragment())
                         .commit()
                     supportActionBar?.title = "Favourites"
                     drawerLayout.closeDrawers()
                 }
-                R.id.profile->{
+                R.id.profile ->{
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame,ProfileFragment())
+                        .replace(R.id.frame, ProfileFragment())
                         .commit()
                     supportActionBar?.title = "Profile"
                     drawerLayout.closeDrawers()
                 }
-                R.id.aboutApp->{
+                R.id.aboutApp ->{
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame,AboutAppFragment())
+                        .replace(R.id.frame, AboutAppFragment())
                         .commit()
                     supportActionBar?.title = "About App"
                     drawerLayout.closeDrawers()
