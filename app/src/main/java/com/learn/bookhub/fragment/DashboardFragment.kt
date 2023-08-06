@@ -8,10 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.learn.bookhub.R
 import com.learn.bookhub.adapter.DashboardRecyclerAdapter
 import com.learn.bookhub.model.Book
@@ -25,13 +29,10 @@ class DashboardFragment : Fragment() {
 
     lateinit var btnCheckInernet: Button
 
-    val bookList = arrayListOf(
-        "P.S. I love You", "The Great Gateby", "Book 3", "Book 4","Book 5","Book 6","Book 7","Book 8","Book 9","Book 10")
-
     lateinit var recyclerAdapter: DashboardRecyclerAdapter
 
     val bookInfoList = arrayListOf<Book>(
-        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
+        /*Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
         Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
         Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
         Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
@@ -41,6 +42,8 @@ class DashboardFragment : Fragment() {
         Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
         Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
         Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily)
+
+         */
     )
 
     override fun onCreateView(
@@ -70,7 +73,7 @@ class DashboardFragment : Fragment() {
 
             } else{
                 val dialog = AlertDialog.Builder(activity as Context)
-                dialog.setTitle("Success")
+                dialog.setTitle("Error")
                 dialog.setMessage("No Internet Connection Found")
                 dialog.setPositiveButton("Ok"){text,listner ->
 
@@ -85,18 +88,53 @@ class DashboardFragment : Fragment() {
 
         layoutManager = LinearLayoutManager(activity)
 
-        recyclerAdapter = DashboardRecyclerAdapter(activity as Context, bookInfoList)
+        val queue = Volley.newRequestQueue(activity as Context)
+        val url = "http://13.235.250.119/v1/book/fetch_books/"
+        val jsonObjectRequest = object : JsonObjectRequest(Request.Method.GET, url,null, Response.Listener{
+            val success = it.getBoolean("data")
+            if (success){
+                val data = it.getJSONArray("data")
+                for (i in 0 until data.length()){
+                    val bookJsonObject = data.getJSONObject(i)
+                    val bookObject = Book(
+                        bookJsonObject.getString("book_id"),
+                        bookJsonObject.getString("name"),
+                        bookJsonObject.getString("author"),
+                        bookJsonObject.getString("rating"),
+                        bookJsonObject.getString("price"),
+                        bookJsonObject.getString("image")
 
-        recyclerDashboard.adapter = recyclerAdapter
+                    )
 
-        recyclerDashboard.layoutManager = layoutManager
+                    bookInfoList.add(bookObject)
+                    recyclerAdapter = DashboardRecyclerAdapter(activity as Context, bookInfoList)
 
-        recyclerDashboard.addItemDecoration(
-            DividerItemDecoration(recyclerDashboard.context,
-                (layoutManager as LinearLayoutManager).orientation
-            )
-        )
+                    recyclerDashboard.adapter = recyclerAdapter
 
+                    recyclerDashboard.layoutManager = layoutManager
+
+                    recyclerDashboard.addItemDecoration(
+                        DividerItemDecoration(recyclerDashboard.context,
+                            (layoutManager as LinearLayoutManager).orientation
+                        )
+                    )
+                }
+
+            } else{
+                Toast.makeText(activity as Context,"",Toast.LENGTH_SHORT).show()
+            }
+        },Response.ErrorListener {
+            println("Error is $it")
+        }) {
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Content-type"] = "application/json"
+                headers["token"] = "f4c7a03d1643a5"
+                return headers
+            }
+        }
+
+        queue.add(jsonObjectRequest)
         return view
     }
 
