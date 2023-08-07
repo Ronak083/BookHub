@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:background="#ffffff"
+    android:layout_margin="6dp">
+
 <LinearLayout
     android:id="@+id/l1Content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="140dp"
     android:orientation="horizontal"
@@ -49,10 +55,11 @@
             android:layout_below="@id/txtBookAuthor"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="#357a38"/>
+            android:textColor="@color/my_light_primary"/>
 
 
     </RelativeLayout>
+
     <TextView
         android:id="@+id/txtBookRating"
         android:layout_weight="1.2"
@@ -60,12 +67,12 @@
         android:padding="4dp"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_ratings"
+        android:drawableTint="#ffca28"
         android:textColor="#ffca28"
         android:text="4.5"
         android:drawablePadding="4dp"
         android:textSize="15sp"
-        android:textStyle="bold">
-
-    </TextView>
+        android:textStyle="bold" />
 
 </LinearLayout>
+</androidx.cardview.widget.CardView>
