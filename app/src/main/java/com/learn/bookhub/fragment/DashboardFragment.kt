@@ -27,24 +27,11 @@ class DashboardFragment : Fragment() {
 
     lateinit var layoutManager: RecyclerView.LayoutManager
 
-    lateinit var btnCheckInernet: Button
+    lateinit var btnCheckInternet: Button
 
     lateinit var recyclerAdapter: DashboardRecyclerAdapter
 
-    val bookInfoList = arrayListOf<Book>(
-        /*Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
-        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
-        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
-        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
-        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
-        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
-        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
-        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
-        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily),
-        Book("Name @", "Ronak", "Rs. 299","4.5",R.drawable.ps_ily)
-
-         */
-    )
+    var bookInfoList = arrayListOf<Book>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,8 +42,8 @@ class DashboardFragment : Fragment() {
 
         recyclerDashboard = view.findViewById(R.id.recyclerDashboard)
 
-        btnCheckInernet = view.findViewById(R.id.btnCheckInternet)
-        btnCheckInernet.setOnClickListener{
+        btnCheckInternet = view.findViewById(R.id.btnCheckInternet)
+        btnCheckInternet.setOnClickListener{
             if (ConnectionManager().checkConnectivity(activity as Context)){
                 val dialog = AlertDialog.Builder(activity as Context)
                 dialog.setTitle("Success")
@@ -90,8 +77,8 @@ class DashboardFragment : Fragment() {
 
         val queue = Volley.newRequestQueue(activity as Context)
         val url = "http://13.235.250.119/v1/book/fetch_books/"
-        val jsonObjectRequest = object : JsonObjectRequest(Request.Method.GET, url,null, Response.Listener{
-            val success = it.getBoolean("data")
+        val jsonObjectRequest = object : JsonObjectRequest( Request.Method.GET, url,null, Response.Listener{
+            val success = it.getBoolean("success")
             if (success){
                 val data = it.getJSONArray("data")
                 for (i in 0 until data.length()){
@@ -103,10 +90,10 @@ class DashboardFragment : Fragment() {
                         bookJsonObject.getString("rating"),
                         bookJsonObject.getString("price"),
                         bookJsonObject.getString("image")
-
                     )
 
                     bookInfoList.add(bookObject)
+
                     recyclerAdapter = DashboardRecyclerAdapter(activity as Context, bookInfoList)
 
                     recyclerDashboard.adapter = recyclerAdapter
@@ -121,7 +108,7 @@ class DashboardFragment : Fragment() {
                 }
 
             } else{
-                Toast.makeText(activity as Context,"",Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity as Context,"Not Connected",Toast.LENGTH_SHORT).show()
             }
         },Response.ErrorListener {
             println("Error is $it")
@@ -137,5 +124,4 @@ class DashboardFragment : Fragment() {
         queue.add(jsonObjectRequest)
         return view
     }
-
 }

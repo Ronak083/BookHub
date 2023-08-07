@@ -11,6 +11,7 @@ import android.widget.Toast
 import java.util.ArrayList
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.bookhub.model.Book
+import com.squareup.picasso.Picasso
 
 class DashboardRecyclerAdapter(val context: Context, val itemList: ArrayList<Book>) : RecyclerView.Adapter<DashboardRecyclerAdapter.DashboardViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardViewHolder {
@@ -29,6 +30,7 @@ class DashboardRecyclerAdapter(val context: Context, val itemList: ArrayList<Boo
         holder.txtBookPrice.text = book.bookPrice
         holder.txtBookRating.text = book.bookRating
         //holder.imgBookImage.setImageResource(book.bookImage)
+        Picasso.get().load(book.bookImage).into(holder.imgBookImage)
 
         holder.l1Content.setOnClickListener{
             Toast.makeText(context,"Clicked on ${holder.txtBookName}",Toast.LENGTH_SHORT).show()
