@@ -6,4 +6,6 @@
     <color name="my_dark_primary">#C23E10</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorFav">#311b92</color>
+    <color name="newPrimary">#F47B20</color>
+    <color name="c2">#E0825E</color>
 </resources>

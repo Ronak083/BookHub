@@ -4,15 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.ProfileFragment">
+    tools:context=".fragment.ProfileFragment"
+    android:background="@color/white"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/imgProfilePic"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/profile_icon"
+        />
+
     <TextView
-        android:id="@+id/txtProfile"
-        android:layout_width="wrap_content"
+        android:id="@+id/txtName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/profile_fragment"
-        android:textSize="20dp"
-        android:padding="10dp" />
+        android:layout_below="@+id/imgProfilePic"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:text="Ronak Gupta"
+        android:textAlignment="center"
+        android:textColor="#111111"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/txtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtName"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="ronakgupta083@gmail.com"
+        android:textAlignment="center"
+        android:textColor="#111111"
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:id="@+id/txtPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtEmail"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="+91 9584425888"
+        android:textAlignment="center"
+        android:textColor="#111111"
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:id="@+id/txtAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtPhone"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="Pune, Maharastra"
+        android:textAlignment="center"
+        android:textColor="#111111"
+        android:textSize="18sp" />
 
 </RelativeLayout>

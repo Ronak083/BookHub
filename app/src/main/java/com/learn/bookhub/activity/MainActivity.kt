@@ -1,20 +1,20 @@
 package com.learn.bookhub.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import com.learn.bookhub.fragment.FavouritesFragment
-import com.learn.bookhub.fragment.ProfileFragment
 import com.learn.bookhub.R
 import com.learn.bookhub.fragment.AboutAppFragment
 import com.learn.bookhub.fragment.DashboardFragment
+import com.learn.bookhub.fragment.FavouritesFragment
+import com.learn.bookhub.fragment.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,39 +39,42 @@ class MainActivity : AppCompatActivity() {
         openDashboard()
 
         val actionBarDrawerToggle = ActionBarDrawerToggle(
-            this@MainActivity,drawerLayout, R.string.open_drawer, R.string.close_drawer
+            this@MainActivity, drawerLayout, R.string.open_drawer, R.string.close_drawer
         )
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
         navigationView.setNavigationItemSelectedListener {
-            if (previousMenuItem != null){
+            if (previousMenuItem != null) {
                 previousMenuItem?.isCheckable = false
             }
             it.isCheckable = true
             it.isChecked = true
             previousMenuItem = it
-            when(it.itemId){
-                R.id.dashboard ->{
+            when (it.itemId) {
+                R.id.dashboard -> {
                     openDashboard()
                     drawerLayout.closeDrawers()
                 }
-                R.id.favourites ->{
+
+                R.id.favourites -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.frame, FavouritesFragment())
                         .commit()
                     supportActionBar?.title = "Favourites"
                     drawerLayout.closeDrawers()
                 }
-                R.id.profile ->{
+
+                R.id.profile -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.frame, ProfileFragment())
                         .commit()
                     supportActionBar?.title = "Profile"
                     drawerLayout.closeDrawers()
                 }
-                R.id.aboutApp ->{
+
+                R.id.aboutApp -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.frame, AboutAppFragment())
                         .commit()
@@ -84,7 +87,8 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    fun setUpToolbar(){
+
+    fun setUpToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = "Toolbar Title"
         supportActionBar?.setHomeButtonEnabled(true)
@@ -93,13 +97,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-        if (id == android.R.id.home){
+        if (id == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START)
         }
         return super.onOptionsItemSelected(item)
     }
 
-    fun openDashboard(){
+    fun openDashboard() {
         val fragment = DashboardFragment()
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frame, fragment)
@@ -110,7 +114,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         val frag = supportFragmentManager.findFragmentById(R.id.frame)
-        when(frag){
+        when (frag) {
             !is DashboardFragment -> openDashboard()
             else -> super.onBackPressed()
         }

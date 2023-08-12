@@ -57,10 +57,8 @@ class DescriptionActivity : AppCompatActivity() {
         imgBookImage = findViewById(R.id.imgBookImage)
         txtBookDesc = findViewById(R.id.txtBookDesc)
         btnAddToFav = findViewById(R.id.btnAddToFav)
-
         progressBar = findViewById(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
-
         progressLayout = findViewById(R.id.progressLayout)
         progressLayout.visibility = View.VISIBLE
 
@@ -154,7 +152,8 @@ class DescriptionActivity : AppCompatActivity() {
                                             .show()
 
                                         btnAddToFav.text = "ADD TO FAVOURITES"
-                                        val noFavColor = ContextCompat.getColor(applicationContext, R.color.my_light_primary)
+                                        val noFavColor =
+                                            ContextCompat.getColor(applicationContext, R.color.my_light_primary)
                                         btnAddToFav.setBackgroundColor(noFavColor)
 
                                     } else {
@@ -181,8 +180,8 @@ class DescriptionActivity : AppCompatActivity() {
 
                 }, Response.ErrorListener {
                     Toast.makeText(this@DescriptionActivity,
-                        "Volley Error occurred",
-                        Toast.LENGTH_LONG)
+                        "Volley Error $it",
+                        Toast.LENGTH_SHORT)
                         .show()
                 }) {
                     override fun getHeaders(): MutableMap<String, String> {
@@ -201,6 +200,7 @@ class DescriptionActivity : AppCompatActivity() {
                 val settingsIntent = Intent(Settings.ACTION_WIRELESS_SETTINGS)
                 startActivity(settingsIntent)
                 this@DescriptionActivity?.finish()
+                //Change One
             }
             dialog.setNegativeButton("Exit"){text, listner ->
                 ActivityCompat.finishAffinity(this@DescriptionActivity)
